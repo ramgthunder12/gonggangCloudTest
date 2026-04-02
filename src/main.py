@@ -54,24 +54,14 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint for K8s probes."""
+    """Health check endpoint for Cloud Run."""
     from datetime import datetime
-    try:
-        db = db_manager.get_session()
-        db.execute(text("SELECT 1"))
-        db.close()
-        db_status = "connected"
-    except Exception as e:
-        db_status = "disconnected"
-        logger.error(f"Health check: DB connection failed: {e}")
-    
     return format_response(
         "success",
         data={
-            "status": "healthy" if db_status == "connected" else "degraded",
+            "status": "healthy",
             "version": "0.1.0",
             "environment": config.ENVIRONMENT,
-            "database": db_status,
             "timestamp": datetime.utcnow().isoformat() + "Z",
         },
     )
