@@ -17,7 +17,7 @@ from src.lib.database import db_manager
 from src.lib.utils import ErrorCodes, format_response
 
 # Initialize database
-db_manager.init_db()
+# db_manager.init_db()
 logger.info("Database initialized successfully")
 
 # Initialize FastAPI app
